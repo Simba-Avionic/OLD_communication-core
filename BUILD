@@ -8,6 +8,8 @@ cc_library(
         "@communication_core//network-data:network_data_type",
         "@communication_core//someip:someip_header",
         "@communication_core//someip:someip_types",
+        "@communication_core//someip/factory:someip_header_factory",
+        "@communication_core//someip/factory:someip_message_factory",
     ],
 )
 
