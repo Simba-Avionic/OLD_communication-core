@@ -1,13 +1,14 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 cc_library(
-    name="communication_core",
-    hdrs=[""],
-    srcs=[""],
-    deps=[
-        "@com_google_googletest//:gtest_main",
-        "@com_google_benchmark//:benchmark_main",
-    ]
+    name = "communication_core",
+    deps = [
+        "@communication_core//network-data:interfaces",
+        "@communication_core//network-data:network_data_structure",
+        "@communication_core//network-data:network_data_type",
+        "@communication_core//someip:someip_header",
+        "@communication_core//someip:someip_types",
+    ],
 )
 
 cc_test(
@@ -15,6 +16,7 @@ cc_test(
     srcs = ["test/sample_test.cc"],
     deps = ["@com_google_googletest//:gtest_main"],
 )
+
 #bazel run :benchmark
 cc_binary(
     name = "com_core_benchmark",
