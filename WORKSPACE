@@ -1,4 +1,4 @@
-workspace(name="communication-core")
+workspace(name="communication_core")
 
 http_archive(
     name = "com_google_benchmark",
