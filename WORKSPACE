@@ -11,6 +11,9 @@ local_repository(
     path = "core",
 )
 
+load("@core//bazel:third_party_repositories.bzl", "include_spdlog")
+include_spdlog()
+
 http_archive(
     name = "com_google_benchmark",
     sha256 = "bdefa4b03c32d1a27bd50e37ca466d8127c1688d834800c38f3c587a396188ee",
