@@ -18,7 +18,7 @@ namespace com {
 namespace core {
 namespace someip {
 namespace factory {
-std::shared_ptr<SomeIpHeader> SomeIpHeaderFactory::CreatEvent(
+std::shared_ptr<SomeIpHeader> SomeIpHeaderFactory::CreateEvent(
     const std::uint16_t service_id, const std::uint16_t event_id) {
   return std::make_shared<SomeIpHeader>(service_id, event_id, 0x00, 0x00, 0x00,
                                         0x1, data::kNotification, data::kEOk);

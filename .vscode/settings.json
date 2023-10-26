@@ -69,6 +69,9 @@
         "forward_list": "cpp",
         "list": "cpp",
         "unordered_set": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "codecvt": "cpp",
+        "complex": "cpp",
+        "typeindex": "cpp"
     }
 }

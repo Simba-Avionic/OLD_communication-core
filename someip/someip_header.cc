@@ -88,7 +88,7 @@ void SomeIpHeader::SetClientID(const uint16_t& value) {
 void SomeIpHeader::SetSessionID(const uint16_t& value) {
   this->session_id_.Set(value);
 }
-void SomeIpHeader::SetSInterfaceVersion(const uint8_t& value) {
+void SomeIpHeader::SetInterfaceVersion(const uint8_t& value) {
   this->interface_version_.Set(value);
 }
 void SomeIpHeader::SetMessageType(const uint8_t& value) {

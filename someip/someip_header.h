@@ -46,7 +46,7 @@ class SomeIpHeader : public core::network::NetworkDataStructure {
   void SetLength(const uint32_t& value);
   void SetClientID(const uint16_t& value);
   void SetSessionID(const uint16_t& value);
-  void SetSInterfaceVersion(const uint8_t& value);
+  void SetInterfaceVersion(const uint8_t& value);
   void SetMessageType(const uint8_t& value);
   void SetReturnCode(const uint8_t& value);
 

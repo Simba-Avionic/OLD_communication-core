@@ -34,7 +34,7 @@ class SomeIpHeaderFactory : public ISomeIpHeaderFactory {
    * @param event_id event id >0x8000
    * @return std::shared_ptr<SomeIpHeader> pre-prepared header
    */
-  std::shared_ptr<SomeIpHeader> CreatEvent(
+  std::shared_ptr<SomeIpHeader> CreateEvent(
       const std::uint16_t service_id, const std::uint16_t event_id) override;
   /**
    * @brief This method will create a pre-prepared header na for messages of
