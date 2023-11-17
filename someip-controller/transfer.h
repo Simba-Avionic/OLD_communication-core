@@ -25,13 +25,14 @@ namespace someip {
 namespace data {
 class Transfer {
  private:
-  std::atomic<std::vector<uint8_t>> respons{};
+  std::vector<uint8_t> respons{};
   std::atomic_bool responsed{false};
   std::condition_variable cv{};
   const uint16_t transfer_id_;
   std::mutex cv_m;
 
  public:
+  const uint16_t GetTransferID() const { return transfer_id_; }
   const bool IsRespond() const { return responsed; }
   Transfer(const uint16_t transfer_id) : transfer_id_{transfer_id} {}
   void SetResponsed(std::vector<uint8_t> payload) {
@@ -49,11 +50,13 @@ class Transfer {
     }
   }
 
-    simba::core::Result<bool> GetACK() {
+  simba::core::Result<bool> GetACK() {
     std::unique_lock<std::mutex> lk(cv_m);
     if (!cv.wait_for(lk, std::chrono::seconds{2},
                      [this]() { return this->IsRespond(); })) {
-      return simba::core::Result<std::vector<uint8_t>>{};
+      return simba::core::Result<bool>{};
+    } else {
+      return simba::core::Result<bool>{true};
     }
   }
 };

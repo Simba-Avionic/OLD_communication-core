@@ -16,6 +16,7 @@
 #include <functional>
 #include <iostream>
 #include <thread>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -24,7 +25,7 @@
 #include "logger/ILogger.h"
 #include "memory"
 #include "results/result.h"
-#include "sockets/ipc_socket.h"
+#include "sockets/Isocket.h"
 #include "sockets/socket_config.h"
 #include "someip-controller/Isomeip_controller.h"
 #include "someip-controller/transfer.h"
@@ -38,24 +39,37 @@ class SomeIpController : public ISomeIpController {
  private:
   void RxCallback(const std::string& ip, const std::uint16_t& port,
                   std::vector<std::uint8_t> payload);
-  std::unique_ptr<soc::IpcSocket> socket_;
+  std::unique_ptr<soc::ISocket> socket_;
   std::shared_ptr<simba::core::logger::ILogger> logger_;
   const std::uint16_t service_id_;
   const soc::SocketConfig config_;
   database::Database db_{};
   com::core::someip::factory::SomeIpHeaderFactory header_factory{};
   com::core::someip::factory::SomeIpMessageFactory msg_factory{};
-  uint16_t transfer_id = 0;
+  uint16_t transfer_id = 2;
 
   inline const uint16_t GetTransferID() { return transfer_id++; }
 
-  std::atomic<std::vector<std::shared_ptr<data::Transfer>>> transfers{};
-
+  std::vector<std::shared_ptr<data::Transfer>> transfers{};
+  std::unordered_map<uint16_t, SomeIPMethod> methods{};
   std::shared_ptr<data::Transfer> AddTransfer(const uint16_t transfer) {
     auto res = std::make_shared<data::Transfer>(transfer);
-    this->transfers.load().push_back(res);
+    this->transfers.push_back(res);
     return res;
   }
+
+  void MethodCalled(
+      const std::shared_ptr<simba::com::core::someip::SomeIpHeader> header,
+      std::vector<std::uint8_t> data);
+  void Response(
+      const std::shared_ptr<simba::com::core::someip::SomeIpHeader> header,
+      std::vector<std::uint8_t> data);
+  void UknowReqeust(
+      const std::shared_ptr<simba::com::core::someip::SomeIpHeader> header,
+      std::vector<std::uint8_t> data);
+  void SendResponse(
+      const std::shared_ptr<simba::com::core::someip::SomeIpHeader> header,
+      std::vector<std::uint8_t> data);
 
  public:
   simba::core::Result<std::vector<uint8_t>> Request(
@@ -73,7 +87,7 @@ class SomeIpController : public ISomeIpController {
   simba::core::ErrorCode Init() override;
   simba::core::ErrorCode LoadServiceList(const std::string& path) override;
   SomeIpController(const uint16_t service_id,
-                   std::unique_ptr<soc::IpcSocket> socket,
+                   std::unique_ptr<soc::ISocket> socket,
                    std::shared_ptr<simba::core::logger::ILogger> logger_,
                    const soc::SocketConfig& config);
 };

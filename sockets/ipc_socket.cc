@@ -14,9 +14,8 @@
 
 #include <algorithm>
 #include <array>
-#include <iostream>
-#include <vector>
 
+#include <vector>
 namespace simba {
 namespace com {
 namespace soc {
@@ -33,7 +32,9 @@ core::ErrorCode IpcSocket::Init(const SocketConfig& config) {
   return core::ErrorCode::kOk;
 }
 
-void IpcSocket::SetRXCallback(RXCallback callback) {}
+void IpcSocket::SetRXCallback(RXCallback callback) {
+  this->callback_ = callback;
+}
 
 core::ErrorCode IpcSocket::Transmit(const std::string& ip,
                                     const std::uint16_t port,
@@ -53,8 +54,8 @@ core::ErrorCode IpcSocket::Transmit(const std::string& ip,
   std::uint8_t* buffor = new std::uint8_t[payload.size()];
   std::copy(payload.begin(), payload.end(), buffor);
 
-  rc = sendto(client_socket, buffor, payload.size(), 0,
-              (struct sockaddr*)&remote, sizeof(remote));
+  rc = sendto(client_socket, buffor, payload.size(), 0, (struct sockaddr*)&remote,
+              sizeof(remote));
   delete[] buffor;
   if (rc == -1) {
     return core::ErrorCode::kError;
@@ -82,7 +83,7 @@ void IpcSocket::Loop() {
                          0, (struct sockaddr*)&peer_sock, (socklen_t*)&len);
     if (bytes_rec >= 0) {
       if (this->callback_) {
-                this->callback_(
+        this->callback_(
             "IPC", 0,
             std::vector<uint8_t>{buffor.begin(), buffor.begin() + bytes_rec});
       }

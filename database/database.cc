@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "app/database/database.h"
+#include "database.h"
 namespace simba {
 namespace database {
 simba::core::Result<DatabaseElement> Database::GetService(

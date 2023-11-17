@@ -3,7 +3,7 @@ cc_library(
     hdrs = ["database_json_parser.h"],
     visibility = ["@communication_core//:__subpackages__"],
     deps = [
-        "//app/database:DatabaseLib",
+        "@communication_core//database:DatabaseLib",
         "@com_json//:json",
     ],
 )

@@ -12,14 +12,17 @@
 #define COMUNICATION_CORE_SOMEIP_CONTROLLER_ISOMEIP_CONTROLLER_H_
 #include <functional>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "common/error_code.h"
 #include "results/result.h"
+#include "someip/message_code.h"
 namespace simba {
 namespace com {
 namespace someip {
-using SomeIPMethod = std::function<simba::core::Result<std::vector<uint8_t>>(
+using SomeIPMethod = std::function<simba::core::Result<
+    std::pair<std::vector<uint8_t>, com::core::data::MessageCode>>(
     const std::vector<uint8_t> payload)>;
 class ISomeIpController {
  public:
@@ -30,9 +33,9 @@ class ISomeIpController {
                                  const uint16_t method_id,
                                  const std::vector<uint8_t> payload) = 0;
   virtual simba::core::ErrorCode AddMethod(const uint16_t method_id,
-                                    SomeIPMethod callback) = 0;
-  virtual simba::core::ErrorCode AddEventValue(const uint16_t event_id,
-                                        const std::vector<uint8_t> payload) = 0;
+                                           SomeIPMethod callback) = 0;
+  virtual simba::core::ErrorCode AddEventValue(
+      const uint16_t event_id, const std::vector<uint8_t> payload) = 0;
   virtual simba::core::ErrorCode Init() = 0;
   virtual simba::core::ErrorCode LoadServiceList(const std::string& path) = 0;
 };
