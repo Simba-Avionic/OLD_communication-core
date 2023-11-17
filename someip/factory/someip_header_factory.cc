@@ -30,6 +30,12 @@ std::shared_ptr<SomeIpHeader> SomeIpHeaderFactory::CreateRequest(
                                         0x00, 0x1, data::kRequest, data::kEOk);
 }
 
+std::shared_ptr<SomeIpHeader> SomeIpHeaderFactory::CreateRequestNoReturn(
+    const std::uint16_t service_id, const std::uint16_t methode_id) {
+  return std::make_shared<SomeIpHeader>(service_id, methode_id, 0x00, 0x00,
+                                        0x00, 0x1, data::kRequestNoReturn, data::kEOk);
+}
+
 std::shared_ptr<SomeIpHeader> SomeIpHeaderFactory::CreateResponse(
     const std::uint16_t service_id, const std::uint16_t methode_id,
     const simba::com::core::data::MessageCode res_flag) {

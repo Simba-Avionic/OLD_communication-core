@@ -32,10 +32,9 @@ class ISomeIpMessageFactory {
    * @param payload vector with payload
    * @return std::vector<uint8_t> vector with ready data to send
    */
-  virtual std::vector<uint8_t> GetBuffor(std::shared_ptr<SomeIpHeader> header,
-                                         const uint16_t client_id,
-                                         const uint16_t transfer_id,
-                                         std::vector<uint8_t> payload) = 0;
+  virtual std::vector<uint8_t> GetBuffor(
+      std::shared_ptr<SomeIpHeader> header, const uint16_t client_id,
+      const uint16_t transfer_id, const std::vector<uint8_t> payload) = 0;
   /**
    * @brief Creat header object from raw data
    *
@@ -43,7 +42,7 @@ class ISomeIpMessageFactory {
    * @return std::shared_ptr<SomeIpHeader> header
    */
   virtual std::shared_ptr<SomeIpHeader> GetHeader(std::vector<uint8_t> raw) = 0;
-    /**
+  /**
    * @brief Get payload from raw data
    *
    * @param raw vector with bit stream

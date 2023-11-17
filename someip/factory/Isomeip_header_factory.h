@@ -56,7 +56,8 @@ class ISomeIpHeaderFactory {
   virtual std::shared_ptr<SomeIpHeader> CreateResponse(
       const std::uint16_t service_id, const std::uint16_t methode_id,
       const simba::com::core::data::MessageCode res_flag) = 0;
-
+  virtual std::shared_ptr<SomeIpHeader> CreateRequestNoReturn(
+      const std::uint16_t service_id, const std::uint16_t methode_id) = 0;
   virtual ~ISomeIpHeaderFactory() = default;
 };
 }  // namespace factory

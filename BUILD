@@ -2,6 +2,7 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 cc_library(
     name = "communication_core",
+    visibility = ["//visibility:public"],
     deps = [
         "@communication_core//network-data:interfaces",
         "@communication_core//network-data:network_data_structure",
@@ -10,6 +11,8 @@ cc_library(
         "@communication_core//someip:someip_types",
         "@communication_core//someip/factory:someip_header_factory",
         "@communication_core//someip/factory:someip_message_factory",
+        "@communication_core//sockets:socket_ipc",
+        # "@communication_core//sockets:socket_ipc",
     ],
 )
 

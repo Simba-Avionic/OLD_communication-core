@@ -38,7 +38,7 @@ class SomeIpMessageFactory : public ISomeIpMessageFactory {
   std::vector<uint8_t> GetBuffor(std::shared_ptr<SomeIpHeader> header,
                                  const uint16_t client_id,
                                  const uint16_t transfer_id,
-                                 std::vector<uint8_t> payload) override;
+                                 const std::vector<uint8_t> payload) override;
   /**
    * @brief Creat header object from raw data
    *

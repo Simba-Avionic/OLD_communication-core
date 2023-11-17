@@ -57,7 +57,8 @@ class SomeIpHeaderFactory : public ISomeIpHeaderFactory {
   std::shared_ptr<SomeIpHeader> CreateResponse(
       const std::uint16_t service_id, const std::uint16_t methode_id,
       const simba::com::core::data::MessageCode res_flag) override;
-
+  std::shared_ptr<SomeIpHeader> CreateRequestNoReturn(
+      const std::uint16_t service_id, const std::uint16_t methode_id) override;
   ~SomeIpHeaderFactory() = default;
 };
 }  // namespace factory
