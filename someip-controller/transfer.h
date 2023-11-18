@@ -48,6 +48,7 @@ class Transfer {
                      [this]() { return this->IsRespond(); })) {
       return simba::core::Result<std::vector<uint8_t>>{};
     }
+    return simba::core::Result<std::vector<uint8_t>>{respons};
   }
 
   simba::core::Result<bool> GetACK() {

@@ -29,7 +29,7 @@ simba::core::Result<std::vector<uint8_t>> SomeIpController::Request(
   } else {
     this->logger_->Error(
         "[SOMEIPCONTROLLER] Service_id: " + std::to_string(service_id) +
-        " ip =" + service_data.Value().GetIp());
+        " ip = " + service_data.Value().GetIp());
   }
   const auto transfer = GetTransferID();
   auto req = header_factory.CreateRequest(service_id, method_id);
@@ -198,7 +198,6 @@ void SomeIpController::Response(
   if (obj == this->transfers.end()) {
     return;
   }
-  logger_->Info("Response data size: ");
   logger_->Info("Response data size: " + std::to_string(data.size()));
   obj->get()->SetResponsed(data);
   logger_->Info("Response done!");
