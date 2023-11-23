@@ -16,7 +16,10 @@ jobs:
 
       - name: Clone Repository to Working Directory
         run: |
-          git clone git@github.com:Simba-Avionic/core.git
+          sudo apt install wget unzip
+          wget https://github.com/Simba-Avionic/core/archive/refs/heads/master.zip
+          unzip master.zip
+          rm master.zip
 
       - name: Set up Bazel
         run: |
