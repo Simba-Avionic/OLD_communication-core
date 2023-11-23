@@ -16,6 +16,11 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: Update and Initialize Submodules
+        run: |
+          git submodule update --init --recursive
+        
+
       - name: Set up Bazel
         run: |
           git submodule update --init --recursive
