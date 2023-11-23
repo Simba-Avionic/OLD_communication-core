@@ -16,9 +16,11 @@ jobs:
 
       - name: Set up Bazel
         run: |
-          wget https://github.com/bazelbuild/bazel/releases/download/6.4.0/bazel_6.4.0-linux-x86_64.deb
-          sudo dpkg -i bazel_6.4.0-linux-x86_64.deb
-          sudo apt-get update
+          sudo apt install apt-transport-https curl gnupg -y
+          sudo curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor >bazel-archive-keyring.gpg
+          sudo mv bazel-archive-keyring.gpg /usr/share/keyrings
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+          sudo apt update
           sudo apt-get install -y bazel cpplint
           bazel version
 
