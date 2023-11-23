@@ -16,6 +16,7 @@ jobs:
 
       - name: Set up Bazel
         run: |
+          git submodule update --init --recursive
           wget https://github.com/bazelbuild/bazel/releases/download/6.4.0/bazel_6.4.0-linux-x86_64.deb
           sudo dpkg -i bazel_6.4.0-linux-x86_64.deb
           sudo apt-get update
