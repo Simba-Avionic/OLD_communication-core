@@ -22,7 +22,7 @@ namespace factory {
 
 std::vector<uint8_t> SomeIpMessageFactory::GetBuffor(
     std::shared_ptr<SomeIpHeader> header, const uint16_t client_id,
-    const uint16_t transfer_id, std::vector<uint8_t> payload) {
+    const uint16_t transfer_id, const std::vector<uint8_t> payload) {
   header->SetClientID(client_id);
   header->SetSessionID(transfer_id);
   header->SetLength(payload.size());

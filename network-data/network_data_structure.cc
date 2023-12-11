@@ -10,7 +10,7 @@
  */
 
 #include "network-data/network_data_structure.h"
-
+#include <iostream>
 #include <cstdint>
 #include <utility>
 #include <vector>
@@ -46,6 +46,8 @@ simba::core::ErrorCode NetworkDataStructure::SetBuffor(
       offset += field->GetSize();
     } else {
       res = simba::core::ErrorCode::kBadVariableSize;
+      std::cerr<<"error for field data size:"<<data.size()<<std::endl;
+
     }
   }
   return res;
