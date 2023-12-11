@@ -97,6 +97,7 @@ bool SomeIpController::RequestNoResponse(const uint16_t service_id,
 simba::core::ErrorCode SomeIpController::AddMethod(const uint16_t method_id,
                                                    SomeIPMethod callback) {
   this->methods.insert({method_id, callback});
+  return simba::core::ErrorCode::kOk;
 }
 
 simba::core::ErrorCode SomeIpController::AddEventValue(
@@ -114,6 +115,7 @@ simba::core::ErrorCode SomeIpController::Init() {
     this->socket_->StartRXThread();
     logger_->Info("[SOMEIPCONTROLLER] Socket started RX Thhread");
   }
+  return simba::core::ErrorCode::kOk;
 }
 
 void SomeIpController::RxCallback(const std::string& ip,

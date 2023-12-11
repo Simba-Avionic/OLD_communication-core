@@ -20,8 +20,8 @@ class DatabaseElement {
   const uint16_t port_;
 
  public:
-  DatabaseElement(const std::string& ip, const int16_t port)
-      : ip_{ip}, port_{port_} {}
+  DatabaseElement(const std::string& ip, const uint16_t port)
+      : ip_{ip}, port_{port} {}
   const inline std::string GetIp() { return ip_; }
   const inline uint16_t GetPort() { return port_; }
   ~DatabaseElement() = default;
