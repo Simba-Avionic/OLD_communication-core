@@ -14,7 +14,7 @@
 #include <string>
 
 #include "database_element.h"
-#include "results/result.h"
+#include "result/result.h"
 
 namespace simba {
 namespace database {
