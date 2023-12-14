@@ -22,6 +22,7 @@
 
 #include "common/error_code.h"
 #include "database/database.h"
+#include "database/event_element.h"
 #include "logger/ILogger.h"
 #include "memory"
 #include "results/result.h"
@@ -43,7 +44,9 @@ class SomeIpController : public ISomeIpController {
   std::shared_ptr<simba::core::logger::ILogger> logger_;
   const std::uint16_t service_id_;
   const soc::SocketConfig config_;
+
   database::Database db_{};
+  std::unordered_map<uint16_t,EventElement> event_db{};
   com::core::someip::factory::SomeIpHeaderFactory header_factory{};
   com::core::someip::factory::SomeIpMessageFactory msg_factory{};
   uint16_t transfer_id = 2;
@@ -82,7 +85,7 @@ class SomeIpController : public ISomeIpController {
   simba::core::ErrorCode AddMethod(const uint16_t method_id,
                                    SomeIPMethod callback) override;
 
-  simba::core::ErrorCode AddEventValue(
+  bool SendEvent(
       const uint16_t event_id, const std::vector<uint8_t> payload) override;
   simba::core::ErrorCode Init() override;
   simba::core::ErrorCode LoadServiceList(const std::string& path) override;

@@ -34,7 +34,7 @@ class ISomeIpController {
                                  const std::vector<uint8_t> payload) = 0;
   virtual simba::core::ErrorCode AddMethod(const uint16_t method_id,
                                            SomeIPMethod callback) = 0;
-  virtual simba::core::ErrorCode AddEventValue(
+  virtual bool SendEvent(
       const uint16_t event_id, const std::vector<uint8_t> payload) = 0;
   virtual simba::core::ErrorCode Init() = 0;
   virtual simba::core::ErrorCode LoadServiceList(const std::string& path) = 0;

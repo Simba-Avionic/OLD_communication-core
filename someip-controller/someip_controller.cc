@@ -15,6 +15,7 @@
 #include "someip/message_code.h"
 #include "someip/message_type.h"
 #include "someip/someip_header.h"
+#include "database/service_element.h"
 namespace simba {
 namespace com {
 namespace someip {
@@ -100,9 +101,24 @@ simba::core::ErrorCode SomeIpController::AddMethod(const uint16_t method_id,
   return simba::core::ErrorCode::kOk;
 }
 
-simba::core::ErrorCode SomeIpController::AddEventValue(
+bool SomeIpController::SendEvent(
     const uint16_t event_id, const std::vector<uint8_t> payload) {
-  return simba::core::ErrorCode::kNotDefine;
+    const auto event_data=this->event_db.find(event_id);
+    if (!event_data.HasValue()){
+          this->logger_->Error("[SOMEIPCONTROLLER] Event_id: " +
+                         std::to_string(event_id) + " not found!");
+    return false;
+    }
+    auto event=header_factory.CreateEvent(this->service_id_,event_id);
+    for (ServiceElement client :event_data.Value().GetLists()){
+      const auto transfer=GetTransferID();
+      auto trans=this->AddTransfer(transfer);
+      auto req_payload=
+      msg_factory.GetBuffor(event,client.GetServiceId(),transfer,payload);
+      this->socket_->Transmit(client.GetIpAddress(),
+                              client.GetPort(),req_payload);
+    }
+  return simba::core::ErrorCode::kOk;
 }
 
 simba::core::ErrorCode SomeIpController::Init() {
@@ -129,6 +145,9 @@ void SomeIpController::RxCallback(const std::string& ip,
   logger_->Info("[SOMEIPCONTROLLER] New Data");
   if (header->GetClientID() == this->service_id_) {
     this->Response(header, msg_factory.GetPayload(payload));
+  }else if(header->GetMessageType()==0x02){
+    // TODO(matikrajek42@gmail.com): Implementacja obsugi przychodzacego eventu
+
   } else if (header->GetServiceID() == this->service_id_) {
     this->MethodCalled(header, msg_factory.GetPayload(payload));
   } else {
