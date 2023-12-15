@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
+#include <string>
+
 #include "someip-controller/someip_controller.h"
 
 #include "json-parser/database_json_parser.h"
@@ -101,22 +103,45 @@ simba::core::ErrorCode SomeIpController::AddMethod(const uint16_t method_id,
   return simba::core::ErrorCode::kOk;
 }
 
-bool SomeIpController::SendEvent(
+
+/**
+ * @brief Dodajemy callback dla otrzymania subskrybowanego eventu
+ * 
+ * @param service_id 
+ * @param event_id 
+ * @param callback 
+ * @return simba::core::ErrorCode 
+ */
+simba::core::ErrorCode AddEvent(const uint16_t service_id,
+          const uint16_t event_id, SomeIPEvent callback) {
+  this->events.insert({std::make_pair(service_id, event_id), callback})
+  return simba::core::ErrorCode::kOk;
+}
+
+
+/**
+ * @brief Funkcja do nadawania eventow do wszystkich zainteresowanych
+ * 
+ * @param event_id 
+ * @param payload 
+ * @return simba::core::ErrorCode 
+ */
+simba::core::ErrorCode SomeIpController::SendEvent(
     const uint16_t event_id, const std::vector<uint8_t> payload) {
-    const auto event_data=this->event_db.find(event_id);
-    if (!event_data.HasValue()){
+    const auto event_data = this->event_db.find(event_id);
+    if (!event_data.HasValue()) {
           this->logger_->Error("[SOMEIPCONTROLLER] Event_id: " +
                          std::to_string(event_id) + " not found!");
-    return false;
+    return simba::core::ErrorCode::kError;
     }
-    auto event=header_factory.CreateEvent(this->service_id_,event_id);
-    for (ServiceElement client :event_data.Value().GetLists()){
-      const auto transfer=GetTransferID();
-      auto trans=this->AddTransfer(transfer);
-      auto req_payload=
-      msg_factory.GetBuffor(event,client.GetServiceId(),transfer,payload);
+    auto event = header_factory.CreateEvent(this->service_id_, event_id);
+    for (ServiceElement client : event_data.Value().GetLists()) {
+      const auto transfer = GetTransferID();
+      auto trans = this->AddTransfer(transfer);
+      auto req_payload =
+      msg_factory.GetBuffor(event, client.GetServiceId(), transfer, payload);
       this->socket_->Transmit(client.GetIpAddress(),
-                              client.GetPort(),req_payload);
+                              client.GetPort(), req_payload);
     }
   return simba::core::ErrorCode::kOk;
 }
@@ -143,11 +168,15 @@ void SomeIpController::RxCallback(const std::string& ip,
                        " from: " + std::to_string(header->GetClientID()) +
                        " transfer: " + std::to_string(header->GetSessionID()));
   logger_->Info("[SOMEIPCONTROLLER] New Data");
+  // odpowiedz na Request
   if (header->GetClientID() == this->service_id_) {
     this->Response(header, msg_factory.GetPayload(payload));
-  }else if(header->GetMessageType()==0x02){
+  //jesli to event
+  } else if (header->GetMessageType() == 0x02) {
     // TODO(matikrajek42@gmail.com): Implementacja obsugi przychodzacego eventu
+    this->EventCalled(header,msg_factory.GetPayload(payload));
 
+  //jesli metoda
   } else if (header->GetServiceID() == this->service_id_) {
     this->MethodCalled(header, msg_factory.GetPayload(payload));
   } else {
@@ -177,6 +206,26 @@ simba::core::ErrorCode SomeIpController::LoadServiceList(
   return simba::core::ErrorCode::kOk;
 }
 
+/**
+ * @brief Funkcja wywoływana kiedy RxCallback wychwyci msg_type==Notification
+ * 
+ * @param header 
+ * @param data 
+ */
+void SomeIpController::EventCalled(
+    const std::shared_ptr<simba::com::core::someip::SomeIpHeader> header,
+    std::vector<std::uint8_t> data) {
+  logger_->Debug("[SOMEIPCONTROLLER] Call event");
+  const auto obj = this->events.find(std::make_pair
+                (header->GetServiceID(), header->GetMethodID()));
+  if (obj == this->events.end()) {
+    logger_->Error("[SOMEIPCONTROLLER] Event Not found event_id: " +
+                   std::to_string(header->GetMethodID()));
+    return
+  }
+  obj->second(data);
+}
+
 void SomeIpController::MethodCalled(
     const std::shared_ptr<simba::com::core::someip::SomeIpHeader> header,
     std::vector<std::uint8_t> data) {
@@ -185,10 +234,9 @@ void SomeIpController::MethodCalled(
   if (obj == this->methods.end()) {
     logger_->Error("[SOMEIPCONTROLLER] Method Not found method_id: " +
                    std::to_string(header->GetMethodID()));
-    // TODO: implemnet error method uknown
+    //TODO() : implemnet error method uknown
     return;
   }
-
   const auto res = obj->second(data);
 
   if (!res.HasValue()) {
