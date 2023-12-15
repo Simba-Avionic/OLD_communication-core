@@ -24,8 +24,7 @@ namespace someip {
 using SomeIPMethod = std::function<simba::core::Result<
     std::pair<std::vector<uint8_t>, com::core::data::MessageCode>>(
     const std::vector<uint8_t> payload)>;
-using SomeIPEvent = std::function<simba::core::Result<
-    std::pair<std::vector<uint8_t>, com::core::data::MessageCode>>(
+using SomeIPEvent = std::function<void> (
     const std::vector<uint8_t> payload)>;
 
 class ISomeIpController {
@@ -38,8 +37,7 @@ class ISomeIpController {
                                  const std::vector<uint8_t> payload) = 0;
   virtual simba::core::ErrorCode AddMethod(const uint16_t method_id,
                                            SomeIPMethod callback) = 0;
-  virtual simba::core::ErrorCode AddEvent(const uint16_t event_id,
-                                           SomeIPEvent callback) = 0;
+  virtual simba::core::ErrorCode AddEventCallback(const uint32_t id, SomeIPEvent callback) = 0;
 
   virtual simba::core::ErrorCode SendEvent(
       const uint16_t event_id, const std::vector<uint8_t> payload) = 0;

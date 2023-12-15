@@ -8,16 +8,14 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include <string>
-
 #include "someip-controller/someip_controller.h"
-
 #include "json-parser/database_json_parser.h"
 #include "results/result.h"
 #include "someip/message_code.h"
 #include "someip/message_type.h"
 #include "someip/someip_header.h"
 #include "database/service_element.h"
+#include <string>
 namespace simba {
 namespace com {
 namespace someip {
@@ -99,23 +97,30 @@ bool SomeIpController::RequestNoResponse(const uint16_t service_id,
 
 simba::core::ErrorCode SomeIpController::AddMethod(const uint16_t method_id,
                                                    SomeIPMethod callback) {
-  this->methods.insert({method_id, callback});
-  return simba::core::ErrorCode::kOk;
+  auto data == this->methods.find(method_id);
+  if (data == methods.end()){
+    this->methods.insert({method_id, callback});
+    return simba::core::ErrorCode::kOk;
+  }                                                 
+  return simba::core::ErrorCode::kError;
 }
 
 
 /**
  * @brief Dodajemy callback dla otrzymania subskrybowanego eventu
  * 
- * @param service_id 
- * @param event_id 
+ * @param id (service_id+event_id)
  * @param callback 
  * @return simba::core::ErrorCode 
  */
-simba::core::ErrorCode AddEvent(const uint16_t service_id,
-          const uint16_t event_id, SomeIPEvent callback) {
-  this->events.insert({std::make_pair(service_id, event_id), callback})
-  return simba::core::ErrorCode::kOk;
+simba::core::ErrorCode AddEventCallback(
+            const uint32_t id, SomeIPEvent callback) {
+  auto data = this->events.find(id);
+  if (data == events.end()) {
+    this->events.insert({id, callback})
+    return simba::core::ErrorCode:kOk;
+  }
+  return simba::core::ErrorCode::kError;
 }
 
 
@@ -127,7 +132,7 @@ simba::core::ErrorCode AddEvent(const uint16_t service_id,
  * @return simba::core::ErrorCode 
  */
 simba::core::ErrorCode SomeIpController::SendEvent(
-    const uint16_t event_id, const std::vector<uint8_t> payload) {
+    const uint16_t event_id, const std::vector<uint8_t>& payload) {
     const auto event_data = this->event_db.find(event_id);
     if (!event_data.HasValue()) {
           this->logger_->Error("[SOMEIPCONTROLLER] Event_id: " +

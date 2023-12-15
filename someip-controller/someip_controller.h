@@ -19,6 +19,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <string>
 
 #include "common/error_code.h"
 #include "database/database.h"
@@ -50,7 +51,8 @@ class SomeIpController : public ISomeIpController {
    * @brief zmienna przechowująca baze eventów publikowanych przez Klase,
    * wraz z listą subskrybenow
    */
-  std::unordered_map<uint16_t,simba::database::objects::EventElement> event_db{};
+  std::unordered_map<uint16_t,
+                    simba::database::objects::EventElement> event_db{};
   com::core::someip::factory::SomeIpHeaderFactory header_factory{};
   com::core::someip::factory::SomeIpMessageFactory msg_factory{};
   uint16_t transfer_id = 2;
@@ -60,9 +62,9 @@ class SomeIpController : public ISomeIpController {
   std::vector<std::shared_ptr<data::Transfer>> transfers{};
   /**
    * @brief zmienna przechowująca Subskrybowane eventy i ich callbacki.
-   * klucz to service_id,event_id
+   * klucz to service_id+event_id
    */
-  std::unordered_map<std::pair<uint16_t, uint16_t>, SomeIPEvent> events{};
+  std::unordered_map<uint32_t, SomeIPEvent> events{};
   std::unordered_map<uint16_t, SomeIPMethod> methods{};
   std::shared_ptr<data::Transfer> AddTransfer(const uint16_t transfer) {
     auto res = std::make_shared<data::Transfer>(transfer);
@@ -97,8 +99,8 @@ class SomeIpController : public ISomeIpController {
   simba::core::ErrorCode AddMethod(const uint16_t method_id,
                                    SomeIPMethod callback) override;
 
-  simba::core::ErrorCode AddEvent(const uint16_t event_id,
-                                           SomeIPEvent callback) override;
+  simba::core::ErrorCode AddEventCallback(const uint32_t id,
+                                    SomeIPEvent callback) override;
 
   simba::core::ErrorCode SendEvent(
       const uint16_t event_id, const std::vector<uint8_t> payload) override;
