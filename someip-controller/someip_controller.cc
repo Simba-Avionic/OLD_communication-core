@@ -114,8 +114,8 @@ simba::core::ErrorCode SomeIpController::AddMethod(const uint16_t method_id,
  * @return simba::core::ErrorCode 
  */
 simba::core::ErrorCode AddEventCallback(
-            const uint32_t id, SomeIPEvent callback) {
-  auto data = this->events.find(id);
+            const uint16_t service_id, const uint16_t event_id, SomeIPEvent callback) {
+  auto data = this->events.find(static_cast<uint32_t>(service_id) << 16 | static_cast<uint32_t>(event_id));
   if (data == events.end()) {
     this->events.insert({id, callback})
     return simba::core::ErrorCode:kOk;

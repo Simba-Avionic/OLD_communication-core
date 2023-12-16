@@ -99,7 +99,7 @@ class SomeIpController : public ISomeIpController {
   simba::core::ErrorCode AddMethod(const uint16_t method_id,
                                    SomeIPMethod callback) override;
 
-  simba::core::ErrorCode AddEventCallback(const uint32_t id,
+  simba::core::ErrorCode AddEventCallback(const uint16_t service_id, const uint16_t event_id,
                                     SomeIPEvent callback) override;
 
   simba::core::ErrorCode SendEvent(
