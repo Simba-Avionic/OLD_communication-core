@@ -4,10 +4,10 @@ cc_library(
         "Isomeip_header_factory.h",
         "Isomeip_message_factory.h",
     ],
-    visibility = ["@communication_core//:__subpackages__"],
+    visibility = ["//communication_core/:__subpackages__"],
     deps = [
-        "@communication_core//someip:someip_header",
-        "@communication_core//someip:someip_types",
+        "//communication_core/someip:someip_header",
+        "//communication_core/someip:someip_types",
         "@core",
     ],
 )
@@ -18,11 +18,11 @@ cc_library(
     hdrs = [
         "someip_message_factory.h",
     ],
-    visibility = ["@communication_core//:__subpackages__"],
+    visibility = ["//communication_core/:__subpackages__"],
     deps = [
         ":someip_factory_interface",
-        "@communication_core//someip:someip_header",
-        "@communication_core//someip:someip_types",
+        "//communication_core/someip:someip_header",
+        "//communication_core/someip:someip_types",
         "@core",
     ],
 )
@@ -33,11 +33,11 @@ cc_library(
     hdrs = [
         "someip_header_factory.h",
     ],
-    visibility = ["@communication_core//:__subpackages__"],
+    visibility = ["//communication_core/:__subpackages__"],
     deps = [
         ":someip_factory_interface",
-        "@communication_core//someip:someip_header",
-        "@communication_core//someip:someip_types",
+        "//communication_core/someip:someip_header",
+        "//communication_core/someip:someip_types",
         "@core",
     ],
 )

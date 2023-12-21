@@ -10,6 +10,6 @@ cc_library(
         "net_interface_element.h",
         "service_element.h",
     ],
-    visibility = ["@communication_core//:__subpackages__"],
+    visibility = ["//communication_core/:__subpackages__"],
     deps = ["@core"],
 )
