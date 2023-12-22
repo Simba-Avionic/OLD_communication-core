@@ -26,7 +26,7 @@ core::ErrorCode IpcSocket::Init(const SocketConfig& config) {
     return core::ErrorCode::kInitializeError;
   }
   server_sockaddr.sun_family = AF_UNIX;
-  strcpy(server_sockaddr.sun_path, config.GetIp().c_str());
+  strcpy(server_sockaddr.sun_path, config.GetIp().c_str());  // NOLINT
   len = sizeof(server_sockaddr);
   unlink(config.GetIp().c_str());
   return core::ErrorCode::kOk;
@@ -49,7 +49,7 @@ core::ErrorCode IpcSocket::Transmit(const std::string& ip,
   }
 
   remote.sun_family = AF_UNIX;
-  strcpy(remote.sun_path, ip.c_str());
+  strcpy(remote.sun_path, ip.c_str());  // NOLINT
 
   std::uint8_t* buffor = new std::uint8_t[payload.size()];
   std::copy(payload.begin(), payload.end(), buffor);
@@ -80,7 +80,7 @@ void IpcSocket::Loop() {
   while (true) {
     std::array<char, 256 * 2> buffor;
     bytes_rec = recvfrom(server_sock, reinterpret_cast<char*>(&buffor), 256 * 2,
-                         0, (struct sockaddr*)&peer_sock, (socklen_t*)&len);
+                         0, (struct sockaddr*)&peer_sock, (socklen_t*)&len);  // NOLINT
     if (bytes_rec >= 0) {
       if (this->callback_) {
         this->callback_(

@@ -43,7 +43,6 @@ std::vector<uint8_t> SomeIpMessageFactory::GetPayload(
   std::vector<uint8_t> payload{};
   std::copy(raw.begin() + 0x10, raw.end(), std::back_inserter(payload));
   return payload;
-  
 }
 }  // namespace factory
 }  // namespace someip

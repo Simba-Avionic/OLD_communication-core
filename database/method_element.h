@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMUNICATION_CORE_DATABASE_METHOD_ELEMENT_H_
-#define COMUNICATION_CORE_DATABASE_METHOD_ELEMENT_H_
+#ifndef COMMUNICATION_CORE_DATABASE_METHOD_ELEMENT_H_
+#define COMMUNICATION_CORE_DATABASE_METHOD_ELEMENT_H_
 #include <stdint.h>
 
 #include <vector>
@@ -33,4 +33,4 @@ class MethodElement {
 }  // namespace objects
 }  // namespace database
 }  // namespace simba
-#endif  // COMUNICATION_CORE_DATABASE_METHOD_ELEMENT_H_
+#endif  // COMMUNICATION_CORE_DATABASE_METHOD_ELEMENT_H_

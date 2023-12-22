@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMUNICATION_CORE_SOCKETS_ISOCKET_H_
-#define COMUNICATION_CORE_SOCKETS_ISOCKET_H_
+#ifndef COMMUNICATION_CORE_SOCKETS_ISOCKET_H_
+#define COMMUNICATION_CORE_SOCKETS_ISOCKET_H_
 #include <cstdint>
 #include <functional>
 #include <string>
@@ -61,4 +61,4 @@ class ISocket {
 }  // namespace com
 }  // namespace simba
 
-#endif  // COMUNICATION_CORE_SOCKETS_ISOCKET_H_
+#endif  // COMMUNICATION_CORE_SOCKETS_ISOCKET_H_

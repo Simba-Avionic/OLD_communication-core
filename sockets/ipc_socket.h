@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
-#define COMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
+#ifndef COMMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
+#define COMMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,8 +18,10 @@
 #include <sys/types.h>
 #include <sys/un.h>
 
-#include <thread>
 #include <memory>
+#include <string>
+#include <thread>
+#include <vector>
 
 #include "sockets/Isocket.h"
 namespace simba {
@@ -28,13 +30,14 @@ namespace soc {
 class IpcSocket : public ISocket {
  private:
   int server_sock, len, rc;
-    int bytes_rec = 0;
-    struct sockaddr_un server_sockaddr, peer_sock;
-    char buf[256*2];
+  int bytes_rec = 0;
+  struct sockaddr_un server_sockaddr, peer_sock;
+  char buf[256 * 2];
 
   std::unique_ptr<std::thread> rx_thred;
   void Loop();
   RXCallback callback_;
+
  public:
   /**
    * @brief Socket init function
@@ -69,4 +72,4 @@ class IpcSocket : public ISocket {
 }  // namespace com
 }  // namespace simba
 
-#endif  // COMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
+#endif  // COMMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
