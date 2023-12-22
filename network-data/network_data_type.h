@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef CORE_CODE_NETWORK_DATA_TYPE_H_
-#define CORE_CODE_NETWORK_DATA_TYPE_H_
+#ifndef COMMUNICATION_CORE_NETWORK_DATA_NETWORK_DATA_TYPE_H_
+#define COMMUNICATION_CORE_NETWORK_DATA_NETWORK_DATA_TYPE_H_
 #include <algorithm>
 #include <array>
 #include <cstring>
@@ -121,4 +121,4 @@ using bool_t = NetworkDataType<bool, 1>;
 }  // namespace core
 }  // namespace com
 }  // namespace simba
-#endif  // CORE_CODE_NETWORK_DATA_TYPE_H_
+#endif  // COMMUNICATION_CORE_NETWORK_DATA_NETWORK_DATA_TYPE_H_

@@ -8,20 +8,22 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMUNICATION_CORE_SOCKETS_UDP_SOCKET_H_
-#define COMUNICATION_CORE_SOCKETS_UDP_SOCKET_H_
+#ifndef COMMUNICATION_CORE_SOCKETS_UDP_SOCKET_H_
+#define COMMUNICATION_CORE_SOCKETS_UDP_SOCKET_H_
+#include <arpa/inet.h>
 #include <errno.h>
+#include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/un.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 
-#include <thread>
 #include <memory>
+#include <string>
+#include <thread>
+#include <vector>
 
 #include "sockets/Isocket.h"
 namespace simba {
@@ -29,13 +31,14 @@ namespace com {
 namespace soc {
 class UdpSocket : public ISocket {
  private:
-  int server_sock,len,rc;
-  int bytes_rec =0;
-  struct sockaddr_in server_sockaddr,peer_sock;
-  
+  int server_sock, len, rc;
+  int bytes_rec = 0;
+  struct sockaddr_in server_sockaddr, peer_sock;
+
   std::unique_ptr<std::thread> rx_thread;
   void Loop();
   RXCallback callback_;
+
  public:
   /**
    * @brief Socket init function
@@ -70,4 +73,4 @@ class UdpSocket : public ISocket {
 }  // namespace com
 }  // namespace simba
 
-#endif  // COMUNICATION_CORE_SOCKETS_UDP_SOCKET_H_
+#endif  // COMMUNICATION_CORE_SOCKETS_UDP_SOCKET_H_

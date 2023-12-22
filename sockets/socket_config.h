@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMUNICATION_CORE_SOCKETS_SOCKET_CONFIG_H_
-#define COMUNICATION_CORE_SOCKETS_SOCKET_CONFIG_H_
+#ifndef COMMUNICATION_CORE_SOCKETS_SOCKET_CONFIG_H_
+#define COMMUNICATION_CORE_SOCKETS_SOCKET_CONFIG_H_
 #include <cstdint>
 #include <string>
 
@@ -34,4 +34,4 @@ class SocketConfig {
 }  // namespace soc
 }  // namespace com
 }  // namespace simba
-#endif  // COMUNICATION_CORE_SOCKETS_SOCKET_CONFIG_H_
+#endif  // COMMUNICATION_CORE_SOCKETS_SOCKET_CONFIG_H_

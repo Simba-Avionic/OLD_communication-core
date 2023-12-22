@@ -10,6 +10,8 @@
  */
 #include "someip-controller/someip_controller.h"
 
+#include <string>
+
 #include "json-parser/database_json_parser.h"
 #include "results/result.h"
 #include "someip/message_code.h"
@@ -132,7 +134,7 @@ void SomeIpController::RxCallback(const std::string& ip,
   } else if (header->GetServiceID() == this->service_id_) {
     this->MethodCalled(header, msg_factory.GetPayload(payload));
   } else {
-    // TODO: Implementacja Error nie ten serwis
+    // TODO(any) : Implementacja Error nie ten serwis
   }
 }
 
@@ -166,7 +168,7 @@ void SomeIpController::MethodCalled(
   if (obj == this->methods.end()) {
     logger_->Error("[SOMEIPCONTROLLER] Method Not found method_id: " +
                    std::to_string(header->GetMethodID()));
-    // TODO: implemnet error method uknown
+    // TODO(any) : implemnet error method uknown
     return;
   }
 
@@ -174,12 +176,12 @@ void SomeIpController::MethodCalled(
 
   if (!res.HasValue()) {
     logger_->Info("[SOMEIPCONTROLLER] Socket Send Respons No Value");
-    // TODO: implemnet error kNOK
+    // TODO(any) : implemnet error kNOK
   }
 
   if (res.Value().second != com::core::data::MessageCode::kEOk) {
     logger_->Info("[SOMEIPCONTROLLER] Socket Send Respons No OK");
-    // TODO: implemnet error
+    // TODO(any) : implemnet error
   } else {
     if (header->GetMessageType() == com::core::data::MessageType::kRequest) {
       header->SetMessageType(core::data::MessageType::kResponse);
@@ -213,7 +215,7 @@ void SomeIpController::SendResponse(
   const auto service_id = header->GetClientID();
   const auto service_data = db_.GetService(service_id);
   if (!service_data.HasValue()) {
-    this->logger_->Error("[SOMEIPCONTROLLER] (" + std::string{__func__} +
+    this->logger_->Error("[SOMEIPCONTROLLER] (" + std::string(__func__) +
                          ") Service_id: " + std::to_string(service_id) +
                          " not found!");
   }

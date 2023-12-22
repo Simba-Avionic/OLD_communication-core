@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef ROUTER_COMUNICATION_CORE_DATABASE_DATABASE_H_
-#define ROUTER_COMUNICATION_CORE_DATABASE_DATABASE_H_
+#ifndef COMMUNICATION_CORE_DATABASE_DATABASE_H_
+#define COMMUNICATION_CORE_DATABASE_DATABASE_H_
 #include <cstdint>
 #include <string>
 
@@ -35,4 +35,4 @@ class Database : public IDatabase {
 };
 }  // namespace database
 }  // namespace simba
-#endif  // ROUTER_COMUNICATION_CORE_DATABASE_DATABASE_H_
+#endif  // COMMUNICATION_CORE_DATABASE_DATABASE_H_

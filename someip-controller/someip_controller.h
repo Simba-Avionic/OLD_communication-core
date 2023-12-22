@@ -8,13 +8,14 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_
-#define COMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_
+#ifndef COMMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_
+#define COMMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
 #include <functional>
 #include <iostream>
+#include <string>
 #include <thread>
 #include <unordered_map>
 #include <utility>
@@ -95,4 +96,4 @@ class SomeIpController : public ISomeIpController {
 }  // namespace com
 }  // namespace simba
 
-#endif  // COMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_
+#endif  // COMMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_

@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMUNICATION_CORE_SOMEIP_CONTROLLER_TRANSFER_H_
-#define COMUNICATION_CORE_SOMEIP_CONTROLLER_TRANSFER_H_
+#ifndef COMMUNICATION_CORE_SOMEIP_CONTROLLER_TRANSFER_H_
+#define COMMUNICATION_CORE_SOMEIP_CONTROLLER_TRANSFER_H_
 #include <algorithm>
 #include <atomic>
 #include <chrono>
@@ -34,7 +34,7 @@ class Transfer {
  public:
   const uint16_t GetTransferID() const { return transfer_id_; }
   const bool IsRespond() const { return responsed; }
-  Transfer(const uint16_t transfer_id) : transfer_id_{transfer_id} {}
+  explicit Transfer(const uint16_t transfer_id) : transfer_id_{transfer_id} {}
   void SetResponsed(std::vector<uint8_t> payload) {
     std::copy(payload.begin(), payload.end(), std::back_inserter(respons));
     responsed = true;
@@ -66,4 +66,4 @@ class Transfer {
 }  // namespace com
 }  // namespace simba
 
-#endif  // COMUNICATION_CORE_SOMEIP_CONTROLLER_TRANSFER_H_
+#endif  // COMMUNICATION_CORE_SOMEIP_CONTROLLER_TRANSFER_H_

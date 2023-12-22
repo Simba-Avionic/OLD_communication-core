@@ -16,8 +16,6 @@ cc_library(
     name = "someip_controller",
     srcs = ["someip_controller.cc"],
     hdrs = [
-        # "method.h",
-        # "method_result.h",
         "someip_controller.h",
         "transfer.h",
     ],

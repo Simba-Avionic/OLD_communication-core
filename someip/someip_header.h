@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMMAND_CONTROLLER_CODE_SOMEIP_HEADER_H_
-#define COMMAND_CONTROLLER_CODE_SOMEIP_HEADER_H_
+#ifndef COMMUNICATION_CORE_SOMEIP_SOMEIP_HEADER_H_
+#define COMMUNICATION_CORE_SOMEIP_SOMEIP_HEADER_H_
 #include "network-data/network_data_structure.h"
 #include "network-data/network_data_type.h"
 
@@ -63,4 +63,4 @@ class SomeIpHeader : public core::network::NetworkDataStructure {
 }  // namespace core
 }  // namespace com
 }  // namespace simba
-#endif  // COMMAND_CONTROLLER_CODE_SOMEIP_HEADER_H_
+#endif  // COMMUNICATION_CORE_SOMEIP_SOMEIP_HEADER_H_

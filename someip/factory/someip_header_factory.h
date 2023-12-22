@@ -9,8 +9,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef SOMEIP_FACTORY_SOMEIP_HEADER_FACTORY_H_
-#define SOMEIP_FACTORY_SOMEIP_HEADER_FACTORY_H_
+#ifndef COMMUNICATION_CORE_SOMEIP_FACTORY_SOMEIP_HEADER_FACTORY_H_
+#define COMMUNICATION_CORE_SOMEIP_FACTORY_SOMEIP_HEADER_FACTORY_H_
 
 #include <cstdint>
 #include <memory>
@@ -66,4 +66,4 @@ class SomeIpHeaderFactory : public ISomeIpHeaderFactory {
 }  // namespace core
 }  // namespace com
 }  // namespace simba
-#endif  // SOMEIP_FACTORY_SOMEIP_HEADER_FACTORY_H_
+#endif  // COMMUNICATION_CORE_SOMEIP_FACTORY_SOMEIP_HEADER_FACTORY_H_
