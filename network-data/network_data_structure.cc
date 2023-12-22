@@ -9,7 +9,7 @@
  *
  */
 
-#include "network-data/network_data_structure.h"
+#include "communication-core/network-data/network_data_structure.h"
 
 #include <cstdint>
 #include <iostream>

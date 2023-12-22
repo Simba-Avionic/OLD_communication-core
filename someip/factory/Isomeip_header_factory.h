@@ -16,8 +16,8 @@
 #include <memory>
 #include <vector>
 
-#include "someip/message_code.h"
-#include "someip/someip_header.h"
+#include "communication-core/someip/message_code.h"
+#include "communication-core/someip/someip_header.h"
 namespace simba {
 namespace com {
 namespace core {

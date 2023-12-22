@@ -13,7 +13,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "network-data/iframe.h"
+#include "communication-core/network-data/iframe.h"
 namespace simba {
 namespace com {
 namespace core {

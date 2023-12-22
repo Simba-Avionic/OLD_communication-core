@@ -17,8 +17,8 @@
 #include <utility>
 #include <vector>
 
-#include "common/endianess_converter.h"
-#include "network-data/iframe.h"
+#include "core/common/endianess_converter.h"
+#include "communication-core/network-data/iframe.h"
 namespace simba {
 namespace com {
 namespace core {

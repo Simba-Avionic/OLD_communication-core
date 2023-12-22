@@ -23,7 +23,7 @@
 #include <thread>
 #include <vector>
 
-#include "sockets/Isocket.h"
+#include "communication-core/sockets/Isocket.h"
 namespace simba {
 namespace com {
 namespace soc {
@@ -43,9 +43,9 @@ class IpcSocket : public ISocket {
    * @brief Socket init function
    *
    * @param config Config file
-   * @return core::ErrorCode initialiaze status
+   * @return simba::core::ErrorCode initialiaze status
    */
-  core::ErrorCode Init(const SocketConfig& config) override;
+  simba::core::ErrorCode Init(const SocketConfig& config) override;
   /**
    * @brief Setter for rx callback
    *
@@ -58,9 +58,9 @@ class IpcSocket : public ISocket {
    * @param ip target ip or path
    * @param port target port or 0 for ipcs
    * @param payload payload to send
-   * @return core::ErrorCode status
+   * @return simba::core::ErrorCode status
    */
-  core::ErrorCode Transmit(const std::string& ip, const std::uint16_t port,
+  simba::core::ErrorCode Transmit(const std::string& ip, const std::uint16_t port,
                            std::vector<std::uint8_t> payload) override;
   /**
    * @brief This function start RX thread

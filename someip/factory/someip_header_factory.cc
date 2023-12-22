@@ -8,10 +8,10 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "someip/factory/someip_header_factory.h"
+#include "communication-core/someip/factory/someip_header_factory.h"
 
-#include "someip/message_code.h"
-#include "someip/message_type.h"
+#include "communication-core/someip/message_code.h"
+#include "communication-core/someip/message_type.h"
 
 namespace simba {
 namespace com {

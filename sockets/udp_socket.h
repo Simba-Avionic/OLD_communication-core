@@ -25,13 +25,13 @@
 #include <thread>
 #include <vector>
 
-#include "sockets/Isocket.h"
+#include "communication-core/sockets/Isocket.h"
 namespace simba {
 namespace com {
 namespace soc {
 class UdpSocket : public ISocket {
  private:
-  int server_sock, len, rc;
+  int server_sock, len;
   int bytes_rec = 0;
   struct sockaddr_in server_sockaddr, peer_sock;
 
@@ -46,7 +46,7 @@ class UdpSocket : public ISocket {
    * @param config Config file
    * @return core::ErrorCode initialiaze status
    */
-  core::ErrorCode Init(const SocketConfig& config) override;
+  simba::core::ErrorCode Init(const SocketConfig& config) override;
   /**
    * @brief Setter for rx callback
    *
@@ -61,7 +61,7 @@ class UdpSocket : public ISocket {
    * @param payload payload to send
    * @return core::ErrorCode status
    */
-  core::ErrorCode Transmit(const std::string& ip, const std::uint16_t port,
+  simba::core::ErrorCode Transmit(const std::string& ip, const std::uint16_t port,
                            std::vector<std::uint8_t> payload) override;
   /**
    * @brief This function start RX thread

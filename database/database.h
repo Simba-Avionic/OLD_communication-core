@@ -12,10 +12,10 @@
 #define COMMUNICATION_CORE_DATABASE_DATABASE_H_
 #include <cstdint>
 #include <string>
+#include <unordered_map>
 
-#include "database/Idatabase.h"
-#include "database/database_element.h"
-#include "unordered_map"
+#include "communication-core/database/Idatabase.h"
+#include "communication-core/database/database_element.h"
 namespace simba {
 namespace database {
 class Database : public IDatabase {

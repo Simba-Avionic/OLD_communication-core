@@ -15,8 +15,8 @@
 #include <string>
 #include <vector>
 
-#include "sockets/socket_config.h"
-#include "common/error_code.h"
+#include "communication-core/sockets/socket_config.h"
+#include "core/common/error_code.h"
 namespace simba {
 namespace com {
 namespace soc {
@@ -31,7 +31,7 @@ class ISocket {
    * @param config Config file
    * @return core::ErrorCode initialiaze status
    */
-  virtual core::ErrorCode Init(const SocketConfig& config) = 0;
+  virtual simba::core::ErrorCode Init(const SocketConfig& config) = 0;
   /**
    * @brief Setter for rx callback
    *
@@ -46,7 +46,7 @@ class ISocket {
    * @param payload payload to send
    * @return core::ErrorCode status
    */
-  virtual core::ErrorCode Transmit(const std::string& ip,
+  virtual simba::core::ErrorCode Transmit(const std::string& ip,
                                    const std::uint16_t port,
                                    std::vector<std::uint8_t> payload) = 0;
   /**

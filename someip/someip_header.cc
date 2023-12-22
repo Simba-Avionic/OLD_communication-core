@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "someip/someip_header.h"
+#include "communication-core/someip/someip_header.h"
 
 namespace simba {
 namespace com {

@@ -10,8 +10,8 @@
  */
 #ifndef COMMUNICATION_CORE_SOMEIP_SOMEIP_HEADER_H_
 #define COMMUNICATION_CORE_SOMEIP_SOMEIP_HEADER_H_
-#include "network-data/network_data_structure.h"
-#include "network-data/network_data_type.h"
+#include "communication-core/network-data/network_data_structure.h"
+#include "communication-core/network-data/network_data_type.h"
 
 namespace simba {
 namespace com {

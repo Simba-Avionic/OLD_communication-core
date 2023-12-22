@@ -4,7 +4,7 @@ cc_library(
         "message_code.h",
         "message_type.h",
     ],
-    visibility = ["//communication_core/:__subpackages__"],
+    visibility = ["//communication-core:__subpackages__"],
 )
 
 cc_library(
@@ -13,9 +13,9 @@ cc_library(
     hdrs = [
         "someip_header.h",
     ],
-    visibility = ["//communication_core/:__subpackages__"],
+    visibility = ["//communication-core:__subpackages__"],
     deps = [
-        "//communication_core/network-data:network_data_structure",
-        "//communication_core/network-data:network_data_type",
+        "//communication-core/network-data:network_data_structure",
+        "//communication-core/network-data:network_data_type",
     ],
 )

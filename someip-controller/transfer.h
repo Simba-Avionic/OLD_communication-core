@@ -18,7 +18,7 @@
 #include <mutex>
 #include <vector>
 
-#include "results/result.h"
+#include "core/results/result.h"
 namespace simba {
 namespace com {
 namespace someip {

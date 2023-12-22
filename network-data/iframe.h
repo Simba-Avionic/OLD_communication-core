@@ -14,7 +14,7 @@
 #include <memory>
 #include <vector>
 
-#include "common/error_code.h"
+#include "core/common/error_code.h"
 
 namespace simba {
 namespace com {

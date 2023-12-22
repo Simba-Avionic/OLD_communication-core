@@ -15,9 +15,9 @@
 #include <utility>
 #include <vector>
 
-#include "common/error_code.h"
-#include "results/result.h"
-#include "someip/message_code.h"
+#include "core/common/error_code.h"
+#include "core/results/result.h"
+#include "communication-core/someip/message_code.h"
 namespace simba {
 namespace com {
 namespace someip {

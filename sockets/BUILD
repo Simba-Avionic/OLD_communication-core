@@ -4,8 +4,8 @@ cc_library(
         "Isocket.h",
         "socket_config.h",
     ],
-    deps = ["@core"],
-    visibility = ["//communication_core/:__subpackages__"],
+    deps = ["//core"],
+    visibility = ["//communication-core:__subpackages__"],
 )
 
 cc_library(
@@ -16,7 +16,7 @@ cc_library(
     hdrs = [
         "ipc_socket.h",
     ],
-    visibility = ["//communication_core/:__subpackages__"],
+    visibility = ["//communication-core:__subpackages__"],
     deps = [":socket_interface"],
 )
 
@@ -28,6 +28,6 @@ cc_library(
     hdrs = [
         "udp_socket.h",
     ],
-    visibility = ["//communication_core/:__subpackages__"],
-    deps = [":socket_interface"],
+    visibility = ["//communication-core:__subpackages__"],
+    deps = [":socket_interface","//core"],
 )

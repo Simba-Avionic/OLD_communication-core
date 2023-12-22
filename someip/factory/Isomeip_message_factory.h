@@ -15,7 +15,7 @@
 #include <memory>
 #include <vector>
 
-#include "someip/someip_header.h"
+#include "communication-core/someip/someip_header.h"
 namespace simba {
 namespace com {
 namespace core {

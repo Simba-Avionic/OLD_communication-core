@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "someip/factory/someip_message_factory.h"
+#include "communication-core/someip/factory/someip_message_factory.h"
 
 #include <algorithm>
 #include <iterator>
