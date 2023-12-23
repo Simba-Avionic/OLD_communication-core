@@ -8,13 +8,14 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef ROUTER_COMUNICATION_CORE_JSON_PARSER_DATABASE_JSON_PARSER_H_
-#define ROUTER_COMUNICATION_CORE_JSON_PARSER_DATABASE_JSON_PARSER_H_
+#ifndef COMMUNICATION_CORE_JSON_PARSER_DATABASE_JSON_PARSER_H_
+#define COMMUNICATION_CORE_JSON_PARSER_DATABASE_JSON_PARSER_H_
 #include <fstream>
 #include <iostream>
-#include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
+
+#include "nlohmann/json.hpp"
 // using nlojson = nlohmann::json;
 namespace simba {
 namespace database {
@@ -24,7 +25,8 @@ class DatabaseJsonParser {
   /* data */
  public:
   template <class Database>
-  static void LoadJson(Database& db, const std::string& path_to_json) {
+  static void LoadJson(Database& db,  // NOLINT
+                       const std::string& path_to_json) {  // NOLINT
     std::ifstream f(path_to_json);
     if (!f.is_open()) {
       return;
@@ -54,4 +56,4 @@ class DatabaseJsonParser {
 }  // namespace database
 }  // namespace simba
 
-#endif  // ROUTER_COMUNICATION_CORE_JSON_PARSER_DATABASE_JSON_PARSER_H_
+#endif  // COMMUNICATION_CORE_JSON_PARSER_DATABASE_JSON_PARSER_H_

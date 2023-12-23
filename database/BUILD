@@ -11,6 +11,6 @@ cc_library(
         "service_element.h",
         "app_element.h"
     ],
-    visibility = ["//communication_core/:__subpackages__"],
-    deps = ["@core"],
+    visibility = ["//communication-core:__subpackages__"],
+    deps = ["//core"],
 )

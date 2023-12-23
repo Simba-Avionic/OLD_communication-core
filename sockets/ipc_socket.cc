@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "sockets/ipc_socket.h"
+#include "communication-core/sockets/ipc_socket.h"
 
 #include <unistd.h>
 
@@ -19,24 +19,24 @@
 namespace simba {
 namespace com {
 namespace soc {
-core::ErrorCode IpcSocket::Init(const SocketConfig& config) {
+simba::core::ErrorCode IpcSocket::Init(const SocketConfig& config) {
   memset(&server_sockaddr, 0, sizeof(struct sockaddr_un));
   server_sock = socket(AF_UNIX, SOCK_DGRAM, 0);
   if (server_sock == -1) {
-    return core::ErrorCode::kInitializeError;
+    return simba::core::ErrorCode::kInitializeError;
   }
   server_sockaddr.sun_family = AF_UNIX;
-  strcpy(server_sockaddr.sun_path, config.GetIp().c_str());
+  strcpy(server_sockaddr.sun_path, config.GetIp().c_str());  // NOLINT
   len = sizeof(server_sockaddr);
   unlink(config.GetIp().c_str());
-  return core::ErrorCode::kOk;
+  return simba::core::ErrorCode::kOk;
 }
 
 void IpcSocket::SetRXCallback(RXCallback callback) {
   this->callback_ = callback;
 }
 
-core::ErrorCode IpcSocket::Transmit(const std::string& ip,
+simba::core::ErrorCode IpcSocket::Transmit(const std::string& ip,
                                     const std::uint16_t port,
                                     std::vector<std::uint8_t> payload) {
   int client_socket, rc;
@@ -45,11 +45,11 @@ core::ErrorCode IpcSocket::Transmit(const std::string& ip,
 
   client_socket = socket(AF_UNIX, SOCK_DGRAM, 0);
   if (client_socket == -1) {
-    return core::ErrorCode::kError;
+    return simba::core::ErrorCode::kError;
   }
 
   remote.sun_family = AF_UNIX;
-  strcpy(remote.sun_path, ip.c_str());
+  strcpy(remote.sun_path, ip.c_str());  // NOLINT
 
   std::uint8_t* buffor = new std::uint8_t[payload.size()];
   std::copy(payload.begin(), payload.end(), buffor);
@@ -58,11 +58,11 @@ core::ErrorCode IpcSocket::Transmit(const std::string& ip,
               sizeof(remote));
   delete[] buffor;
   if (rc == -1) {
-    return core::ErrorCode::kError;
+    return simba::core::ErrorCode::kError;
   }
 
   rc = close(client_socket);
-  return core::ErrorCode::kOk;
+  return simba::core::ErrorCode::kOk;
 }
 
 void IpcSocket::StartRXThread() {
@@ -80,7 +80,7 @@ void IpcSocket::Loop() {
   while (true) {
     std::array<char, 256 * 2> buffor;
     bytes_rec = recvfrom(server_sock, reinterpret_cast<char*>(&buffor), 256 * 2,
-                         0, (struct sockaddr*)&peer_sock, (socklen_t*)&len);
+                         0, (struct sockaddr*)&peer_sock, (socklen_t*)&len);  // NOLINT
     if (bytes_rec >= 0) {
       if (this->callback_) {
         this->callback_(

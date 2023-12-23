@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
-#define COMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
+#ifndef COMMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
+#define COMMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,31 +18,34 @@
 #include <sys/types.h>
 #include <sys/un.h>
 
-#include <thread>
 #include <memory>
+#include <string>
+#include <thread>
+#include <vector>
 
-#include "sockets/Isocket.h"
+#include "communication-core/sockets/Isocket.h"
 namespace simba {
 namespace com {
 namespace soc {
 class IpcSocket : public ISocket {
  private:
   int server_sock, len, rc;
-    int bytes_rec = 0;
-    struct sockaddr_un server_sockaddr, peer_sock;
-    char buf[256*2];
+  int bytes_rec = 0;
+  struct sockaddr_un server_sockaddr, peer_sock;
+  char buf[256 * 2];
 
   std::unique_ptr<std::thread> rx_thred;
   void Loop();
   RXCallback callback_;
+
  public:
   /**
    * @brief Socket init function
    *
    * @param config Config file
-   * @return core::ErrorCode initialiaze status
+   * @return simba::core::ErrorCode initialiaze status
    */
-  core::ErrorCode Init(const SocketConfig& config) override;
+  simba::core::ErrorCode Init(const SocketConfig& config) override;
   /**
    * @brief Setter for rx callback
    *
@@ -55,9 +58,9 @@ class IpcSocket : public ISocket {
    * @param ip target ip or path
    * @param port target port or 0 for ipcs
    * @param payload payload to send
-   * @return core::ErrorCode status
+   * @return simba::core::ErrorCode status
    */
-  core::ErrorCode Transmit(const std::string& ip, const std::uint16_t port,
+  simba::core::ErrorCode Transmit(const std::string& ip, const std::uint16_t port,
                            std::vector<std::uint8_t> payload) override;
   /**
    * @brief This function start RX thread
@@ -69,4 +72,4 @@ class IpcSocket : public ISocket {
 }  // namespace com
 }  // namespace simba
 
-#endif  // COMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_
+#endif  // COMMUNICATION_CORE_SOCKETS_IPC_SOCKET_H_

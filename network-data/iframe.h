@@ -8,13 +8,13 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef NETWORK_DATA_IFRAME_H_
-#define NETWORK_DATA_IFRAME_H_
-#include "common/error_code.h"
-
+#ifndef COMMUNICATION_CORE_NETWORK_DATA_IFRAME_H_
+#define COMMUNICATION_CORE_NETWORK_DATA_IFRAME_H_
 #include <cstdint>
 #include <memory>
 #include <vector>
+
+#include "core/common/error_code.h"
 
 namespace simba {
 namespace com {
@@ -34,8 +34,8 @@ class IFrame {
   virtual ~IFrame() = default;
 };
 }  // namespace interface
-}  // namespace network
+}  // namespace core
 }  // namespace com
 }  // namespace simba
 
-#endif  // NETWORK_DATA_IFRAME_H_
+#endif  // COMMUNICATION_CORE_NETWORK_DATA_IFRAME_H_

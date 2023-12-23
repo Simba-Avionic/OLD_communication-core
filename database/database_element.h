@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef ROUTER_COMUNICATION_CORE_DATABASE_DATABASE_ELEMENT_H_
-#define ROUTER_COMUNICATION_CORE_DATABASE_DATABASE_ELEMENT_H_
+#ifndef COMMUNICATION_CORE_DATABASE_DATABASE_ELEMENT_H_
+#define COMMUNICATION_CORE_DATABASE_DATABASE_ELEMENT_H_
 #include <iostream>
 #include <string>
 namespace simba {
@@ -28,4 +28,4 @@ class DatabaseElement {
 };
 }  // namespace database
 }  // namespace simba
-#endif  // ROUTER_COMUNICATION_CORE_DATABASE_DATABASE_ELEMENT_H_
+#endif  // COMMUNICATION_CORE_DATABASE_DATABASE_ELEMENT_H_

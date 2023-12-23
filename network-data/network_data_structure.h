@@ -8,12 +8,12 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef CORE_CODE_NETWORK_DATA_STRUCTURE_H_
-#define CORE_CODE_NETWORK_DATA_STRUCTURE_H_
+#ifndef COMMUNICATION_CORE_NETWORK_DATA_NETWORK_DATA_STRUCTURE_H_
+#define COMMUNICATION_CORE_NETWORK_DATA_NETWORK_DATA_STRUCTURE_H_
 #include <cstdint>
 #include <vector>
 
-#include "network-data/iframe.h"
+#include "communication-core/network-data/iframe.h"
 namespace simba {
 namespace com {
 namespace core {
@@ -36,4 +36,4 @@ class NetworkDataStructure : public interface::IFrame {
 }  // namespace core
 }  // namespace com
 }  // namespace simba
-#endif  // CORE_CODE_NETWORK_DATA_STRUCTURE_H_
+#endif  // COMMUNICATION_CORE_NETWORK_DATA_NETWORK_DATA_STRUCTURE_H_

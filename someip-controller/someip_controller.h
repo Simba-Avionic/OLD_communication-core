@@ -8,29 +8,30 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_
-#define COMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_
+#ifndef COMMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_
+#define COMMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
 #include <functional>
 #include <iostream>
+#include <string>
 #include <thread>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
-#include "common/error_code.h"
-#include "database/database.h"
-#include "logger/ILogger.h"
+#include "core/common/error_code.h"
+#include "communication-core/database/database.h"
+#include "core/logger/Logger.h"
 #include "memory"
-#include "results/result.h"
-#include "sockets/Isocket.h"
-#include "sockets/socket_config.h"
-#include "someip-controller/Isomeip_controller.h"
-#include "someip-controller/transfer.h"
-#include "someip/factory/someip_header_factory.h"
-#include "someip/factory/someip_message_factory.h"
+#include "core/results/result.h"
+#include "communication-core/sockets/Isocket.h"
+#include "communication-core/sockets/socket_config.h"
+#include "communication-core/someip-controller/Isomeip_controller.h"
+#include "communication-core/someip-controller/transfer.h"
+#include "communication-core/someip/factory/someip_header_factory.h"
+#include "communication-core/someip/factory/someip_message_factory.h"
 
 namespace simba {
 namespace com {
@@ -88,11 +89,10 @@ class SomeIpController : public ISomeIpController {
   simba::core::ErrorCode LoadServiceList(const std::string& path) override;
   SomeIpController(const uint16_t service_id,
                    std::unique_ptr<soc::ISocket> socket,
-                   std::shared_ptr<simba::core::logger::ILogger> logger_,
                    const soc::SocketConfig& config);
 };
 }  // namespace someip
 }  // namespace com
 }  // namespace simba
 
-#endif  // COMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_
+#endif  // COMMUNICATION_CORE_SOMEIP_CONTROLLER_SOMEIP_CONTROLLER_H_

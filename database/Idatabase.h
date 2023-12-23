@@ -8,13 +8,13 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef ROUTER_COMUNICATION_CORE_DATABASE_IDATABASE_H_
-#define ROUTER_COMUNICATION_CORE_DATABASE_IDATABASE_H_
+#ifndef COMMUNICATION_CORE_DATABASE_IDATABASE_H_
+#define COMMUNICATION_CORE_DATABASE_IDATABASE_H_
 #include <cstdint>
 #include <string>
 
-#include "database_element.h"
-#include "results/result.h"
+#include "communication-core/database/database_element.h"
+#include "core/results/result.h"
 
 namespace simba {
 namespace database {
@@ -31,4 +31,4 @@ class IDatabase {
 };
 }  // namespace database
 }  // namespace simba
-#endif  // ROUTER_COMUNICATION_CORE_DATABASE_IDATABASE_H_
+#endif  // COMMUNICATION_CORE_DATABASE_IDATABASE_H_

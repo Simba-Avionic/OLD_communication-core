@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "someip/factory/someip_message_factory.h"
+#include "communication-core/someip/factory/someip_message_factory.h"
 
 #include <algorithm>
 #include <iterator>
@@ -43,7 +43,6 @@ std::vector<uint8_t> SomeIpMessageFactory::GetPayload(
   std::vector<uint8_t> payload{};
   std::copy(raw.begin() + 0x10, raw.end(), std::back_inserter(payload));
   return payload;
-  
 }
 }  // namespace factory
 }  // namespace someip

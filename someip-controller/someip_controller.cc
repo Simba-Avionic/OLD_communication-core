@@ -8,13 +8,15 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include "someip-controller/someip_controller.h"
+#include "communication-core/someip-controller/someip_controller.h"
 
-#include "json-parser/database_json_parser.h"
-#include "results/result.h"
-#include "someip/message_code.h"
-#include "someip/message_type.h"
-#include "someip/someip_header.h"
+#include <string>
+
+#include "communication-core/json-parser/database_json_parser.h"
+#include "communication-core/someip/message_code.h"
+#include "communication-core/someip/message_type.h"
+#include "communication-core/someip/someip_header.h"
+#include "core/results/result.h"
 namespace simba {
 namespace com {
 namespace someip {
@@ -23,11 +25,11 @@ simba::core::Result<std::vector<uint8_t>> SomeIpController::Request(
     const std::vector<uint8_t> payload) {
   const auto service_data = db_.GetService(service_id);
   if (!service_data.HasValue()) {
-    this->logger_->Error("[SOMEIPCONTROLLER] Service_id: " +
-                         std::to_string(service_id) + " not found!");
+    AppLogger::Error("[SOMEIPCONTROLLER] Service_id: " +
+                     std::to_string(service_id) + " not found!");
     return simba::core::Result<std::vector<uint8_t>>{};
   } else {
-    this->logger_->Error(
+    AppLogger::Error(
         "[SOMEIPCONTROLLER] Service_id: " + std::to_string(service_id) +
         " ip = " + service_data.Value().GetIp());
   }
@@ -35,8 +37,8 @@ simba::core::Result<std::vector<uint8_t>> SomeIpController::Request(
   auto req = header_factory.CreateRequest(service_id, method_id);
   auto req_payload = msg_factory.GetBuffor(req, service_id_, transfer, payload);
   auto trans = this->AddTransfer(transfer);
-  logger_->Debug("Sending to: " + std::to_string(req->GetServiceID()) +
-                 " From " + std::to_string(req->GetClientID()));
+  AppLogger::Debug("Sending to: " + std::to_string(req->GetServiceID()) +
+                   " From " + std::to_string(req->GetClientID()));
   if (this->socket_->Transmit(service_data.Value().GetIp(),
                               service_data.Value().GetPort(),
                               req_payload) != simba::core::ErrorCode::kOk) {
@@ -45,7 +47,7 @@ simba::core::Result<std::vector<uint8_t>> SomeIpController::Request(
         [trans](std::shared_ptr<simba::com::someip::data::Transfer> tr) {
           return tr->GetTransferID() == trans->GetTransferID();
         });
-    logger_->Error(
+    AppLogger::Error(
         "[SOMEIPCONTROLLER] Request to :" + std::to_string(service_id) +
         " method_id: " + std::to_string(method_id) + " No connection");
     return simba::core::Result<std::vector<uint8_t>>{};
@@ -60,7 +62,7 @@ simba::core::Result<std::vector<uint8_t>> SomeIpController::Request(
   if (res.HasValue()) {
     return simba::core::Result<std::vector<uint8_t>>{vec};
   } else {
-    logger_->Error(
+    AppLogger::Error(
         "[SOMEIPCONTROLLER] Request to :" + std::to_string(service_id) + " : " +
         std::to_string(method_id) + " Timeout");
     return simba::core::Result<std::vector<uint8_t>>{};
@@ -72,8 +74,8 @@ bool SomeIpController::RequestNoResponse(const uint16_t service_id,
                                          const std::vector<uint8_t> payload) {
   const auto service_data = db_.GetService(service_id);
   if (!service_data.HasValue()) {
-    this->logger_->Error("[SOMEIPCONTROLLER] Service_id: " +
-                         std::to_string(service_id) + " not found!");
+    AppLogger::Error("[SOMEIPCONTROLLER] Service_id: " +
+                     std::to_string(service_id) + " not found!");
     return false;
   }
   const auto transfer = GetTransferID();
@@ -88,7 +90,7 @@ bool SomeIpController::RequestNoResponse(const uint16_t service_id,
   if (res.HasValue()) {
     return res.Value();
   } else {
-    logger_->Error(
+    AppLogger::Error(
         "[SOMEIPCONTROLLER] Request to :" + std::to_string(service_id) + " : " +
         std::to_string(method_id) + " Timeout");
   }
@@ -106,14 +108,11 @@ simba::core::ErrorCode SomeIpController::AddEventValue(
 }
 
 simba::core::ErrorCode SomeIpController::Init() {
-  this->db_.AddService(0x100,
-                       simba::database::DatabaseElement{"testowy.socket", 0});
-  this->db_.AddService(0x101,
-                       simba::database::DatabaseElement{"testowy.socket2", 0});
+  AppLogger::Info("[SOMEIPCONTROLLER] Socket starting");
   /// TODO: Do this better with config or config
-  if (this->socket_->Init(this->config_) == simba::core::ErrorCode::kOk) {
+  if (this->socket_->Init(this->config_) == simba::core::ErrorCode::kOk) { 
     this->socket_->StartRXThread();
-    logger_->Info("[SOMEIPCONTROLLER] Socket started RX Thhread");
+    AppLogger::Info("[SOMEIPCONTROLLER] Socket started RX Thhread");
   }
   return simba::core::ErrorCode::kOk;
 }
@@ -122,28 +121,24 @@ void SomeIpController::RxCallback(const std::string& ip,
                                   const std::uint16_t& port,
                                   std::vector<std::uint8_t> payload) {
   const auto header = msg_factory.GetHeader(payload);
-  this->logger_->Debug("[SOMEIPCONTROLLER] New data for: " +
-                       std::to_string(header->GetServiceID()) +
-                       " from: " + std::to_string(header->GetClientID()) +
-                       " transfer: " + std::to_string(header->GetSessionID()));
-  logger_->Info("[SOMEIPCONTROLLER] New Data");
+  AppLogger::Debug("[SOMEIPCONTROLLER] New data for: " +
+                   std::to_string(header->GetServiceID()) +
+                   " from: " + std::to_string(header->GetClientID()) +
+                   " transfer: " + std::to_string(header->GetSessionID()));
+  AppLogger::Info("[SOMEIPCONTROLLER] New Data");
   if (header->GetClientID() == this->service_id_) {
     this->Response(header, msg_factory.GetPayload(payload));
   } else if (header->GetServiceID() == this->service_id_) {
     this->MethodCalled(header, msg_factory.GetPayload(payload));
   } else {
-    // TODO: Implementacja Error nie ten serwis
+    // TODO(any) : Implementacja Error nie ten serwis
   }
 }
 
-SomeIpController::SomeIpController(
-    const uint16_t service_id, std::unique_ptr<soc::ISocket> socket,
-    std::shared_ptr<simba::core::logger::ILogger> logger,
-    const soc::SocketConfig& config)
-    : socket_{std::move(socket)},
-      service_id_{service_id},
-      logger_{logger},
-      config_{config} {
+SomeIpController::SomeIpController(const uint16_t service_id,
+                                   std::unique_ptr<soc::ISocket> socket,
+                                   const soc::SocketConfig& config)
+    : socket_{std::move(socket)}, service_id_{service_id}, config_{config} {
   socket_->SetRXCallback([this](const std::string& ip,
                                 const std::uint16_t& port,
                                 std::vector<std::uint8_t> payload) {
@@ -154,38 +149,38 @@ SomeIpController::SomeIpController(
 simba::core::ErrorCode SomeIpController::LoadServiceList(
     const std::string& path) {
   database::json::DatabaseJsonParser::LoadJson(this->db_, path);
-  logger_->Info("[SOMEIPCONTROLLER] loaded config file with services");
+  AppLogger::Info("[SOMEIPCONTROLLER] loaded config file with services");
   return simba::core::ErrorCode::kOk;
 }
 
 void SomeIpController::MethodCalled(
     const std::shared_ptr<simba::com::core::someip::SomeIpHeader> header,
     std::vector<std::uint8_t> data) {
-  logger_->Debug("[SOMEIPCONTROLLER] Call method");
+  AppLogger::Debug("[SOMEIPCONTROLLER] Call method");
   const auto obj = this->methods.find(header->GetMethodID());
   if (obj == this->methods.end()) {
-    logger_->Error("[SOMEIPCONTROLLER] Method Not found method_id: " +
-                   std::to_string(header->GetMethodID()));
-    // TODO: implemnet error method uknown
+    AppLogger::Error("[SOMEIPCONTROLLER] Method Not found method_id: " +
+                     std::to_string(header->GetMethodID()));
+    // TODO(any) : implemnet error method uknown
     return;
   }
 
   const auto res = obj->second(data);
 
   if (!res.HasValue()) {
-    logger_->Info("[SOMEIPCONTROLLER] Socket Send Respons No Value");
-    // TODO: implemnet error kNOK
+    AppLogger::Info("[SOMEIPCONTROLLER] Socket Send Respons No Value");
+    // TODO(any) : implemnet error kNOK
   }
 
   if (res.Value().second != com::core::data::MessageCode::kEOk) {
-    logger_->Info("[SOMEIPCONTROLLER] Socket Send Respons No OK");
-    // TODO: implemnet error
+    AppLogger::Info("[SOMEIPCONTROLLER] Socket Send Respons No OK");
+    // TODO(any) : implemnet error
   } else {
     if (header->GetMessageType() == com::core::data::MessageType::kRequest) {
       header->SetMessageType(core::data::MessageType::kResponse);
       header->SetReturnCode(core::data::MessageCode::kEOk);
       this->SendResponse(header, res.Value().first);
-      logger_->Info("[SOMEIPCONTROLLER] Socket Send Respons");
+      AppLogger::Info("[SOMEIPCONTROLLER] Socket Send Respons");
     }
   }
 }
@@ -200,9 +195,9 @@ void SomeIpController::Response(
   if (obj == this->transfers.end()) {
     return;
   }
-  logger_->Info("Response data size: " + std::to_string(data.size()));
+  AppLogger::Info("Response data size: " + std::to_string(data.size()));
   obj->get()->SetResponsed(data);
-  logger_->Info("Response done!");
+  AppLogger::Info("Response done!");
 }
 void SomeIpController::UknowReqeust(
     const std::shared_ptr<simba::com::core::someip::SomeIpHeader> header,
@@ -213,9 +208,9 @@ void SomeIpController::SendResponse(
   const auto service_id = header->GetClientID();
   const auto service_data = db_.GetService(service_id);
   if (!service_data.HasValue()) {
-    this->logger_->Error("[SOMEIPCONTROLLER] (" + std::string{__func__} +
-                         ") Service_id: " + std::to_string(service_id) +
-                         " not found!");
+    AppLogger::Error("[SOMEIPCONTROLLER] (" + std::string(__func__) +
+                     ") Service_id: " + std::to_string(service_id) +
+                     " not found!");
   }
 
   this->socket_->Transmit(service_data.Value().GetIp(),

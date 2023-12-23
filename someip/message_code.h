@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef SOMEIP_MESSAGE_CODE_H_
-#define SOMEIP_MESSAGE_CODE_H_
+#ifndef COMMUNICATION_CORE_SOMEIP_MESSAGE_CODE_H_
+#define COMMUNICATION_CORE_SOMEIP_MESSAGE_CODE_H_
 namespace simba {
 namespace com {
 namespace core {
@@ -30,4 +30,4 @@ enum MessageCode {
 }  // namespace core
 }  // namespace com
 }  // namespace simba
-#endif  // SOMEIP_MESSAGE_CODE_H_
+#endif  // COMMUNICATION_CORE_SOMEIP_MESSAGE_CODE_H_

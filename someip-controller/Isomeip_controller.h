@@ -8,16 +8,16 @@
  * @copyright Copyright (c) 2023
  *
  */
-#ifndef COMUNICATION_CORE_SOMEIP_CONTROLLER_ISOMEIP_CONTROLLER_H_
-#define COMUNICATION_CORE_SOMEIP_CONTROLLER_ISOMEIP_CONTROLLER_H_
+#ifndef COMMUNICATION_CORE_SOMEIP_CONTROLLER_ISOMEIP_CONTROLLER_H_
+#define COMMUNICATION_CORE_SOMEIP_CONTROLLER_ISOMEIP_CONTROLLER_H_
 #include <functional>
 #include <string>
 #include <utility>
 #include <vector>
 
-#include "common/error_code.h"
-#include "results/result.h"
-#include "someip/message_code.h"
+#include "core/common/error_code.h"
+#include "core/results/result.h"
+#include "communication-core/someip/message_code.h"
 namespace simba {
 namespace com {
 namespace someip {
@@ -43,4 +43,4 @@ class ISomeIpController {
 }  // namespace com
 }  // namespace simba
 
-#endif  // COMUNICATION_CORE_SOMEIP_CONTROLLER_ISOMEIP_CONTROLLER_H_
+#endif  // COMMUNICATION_CORE_SOMEIP_CONTROLLER_ISOMEIP_CONTROLLER_H_
