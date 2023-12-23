@@ -7,11 +7,11 @@ namespace database {
 namespace json {
 class Json_parser : public Ijson_parser {
     private:
-     virtual void ParseJson(const nlohmann::json& data, simba::database::objects::AppElement& result) override;
+     virtual void ParseJson(const nlohmann::json& data) override;
     public:
      Json_parser() = default;
      ~Json_parser() = default;
-     void LoadJson(const std::string& path, simba::database::objects::AppElement& result) override;
+     simba::database::objects::AppElement LoadJson(const std::string& path) override;
 };
 } //namespace simba
 } //namespace database

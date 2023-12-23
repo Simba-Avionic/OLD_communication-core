@@ -16,7 +16,7 @@ class AppElement {
  private:
     std::string name;
     NetInterfaceElement net_interface;
-    std::unordered_map<uint16_t, std::string> pub_methods;
+    std::unordered_map<std::string, std::string> pub_methods;
     std::unordered_map<std::string, EventElement> req_events;
     std::unordered_map<std::string, EventElement> pub_events;
     std::unordered_map<std::string, MethodElement> db;
