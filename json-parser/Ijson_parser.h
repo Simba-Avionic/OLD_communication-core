@@ -11,9 +11,9 @@ namespace database {
 namespace json {
 class Ijson_parser {
     private:
-     virtual void ParseJson(const nlohmann::json& data, AppElement& result) = 0;
+     virtual void ParseJson(const nlohmann::json& data, simba::database::objects::AppElement& result) = 0;
     public:
-     virtual void LoadJson(const std::string& path, AppElement& result) = 0;
+     virtual void LoadJson(const std::string& path, simba::database::objects::AppElement& result) = 0;
 };
 } //namespace simba
 } //namespace database

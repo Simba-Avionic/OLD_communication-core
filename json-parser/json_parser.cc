@@ -1,18 +1,28 @@
-#ifndef ROUTER_COMUNICATION_CORE_JSON_PARSER_JSON_PARSER_H_
-#define ROUTER_COMUNICATION_CORE_JSON_PARSER_JSON_PARSER_H_
-#include "json-parser/Ijson_parser.h"
-#include "database/app_element.h"
+#include "json_parser.h"
+#include <fstream>
 
 namespace simba {
 namespace database {
 namespace json {
-class Ijson_parser {
-    private:
-     virtual void ParseJson(const nlohmann::json& data, AppElement& result) = 0;
-    public:
-     virtual void LoadJson(const std::string& path, AppElement& result) = 0;
-};
-} //namespace simba
-} //namespace database
-} //namespace json
-#endif ROUTER_COMUNICATION_CORE_JSON_PARSER_JSON_PARSER_H_
+
+void Json_parser::LoadJson(const std::string& path, simba::database::objects::AppElement& result) {
+    std::ifstream file(path);
+    if (file.is_open()) {
+        nlohmann::json data;
+        file >> data;
+        file.close();
+
+        ParseJson(data, result);
+    } else {
+        // Handle file open error
+    }
+}
+
+void Json_parser::ParseJson(const nlohmann::json& data, simba::database::objects::AppElement& result) {
+    result.setName(data["name"]);
+    
+}
+
+} // namespace json
+} // namespace database
+} // namespace simba

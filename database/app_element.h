@@ -37,7 +37,7 @@ class AppElement {
 
     const std::string& getName() const;
     const NetInterfaceElement& getNetInterface() const;
-    const std::unordered_map<std::string, MethodElement>& getPublicMethods() const;
+    const std::unordered_map<uint16_t, std::string>& getPublicMethods() const;
     const std::unordered_map<std::string, EventElement>& getRequestEvents() const;
     const std::unordered_map<std::string, EventElement>& getPublicEvents() const;
     const std::unordered_map<std::string, MethodElement>& getDatabaseMethods() const;
