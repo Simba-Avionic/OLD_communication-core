@@ -9,6 +9,7 @@ cc_library(
         "method_element.h",
         "net_interface_element.h",
         "service_element.h",
+        "app_element.h"
     ],
     visibility = ["//communication_core/:__subpackages__"],
     deps = ["@core"],

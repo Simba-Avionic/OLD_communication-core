@@ -14,7 +14,7 @@
 
 #include <vector>
 
-#include "database/services_element.h"
+#include "database/service_element.h"
 
 namespace simba {
 namespace database {
@@ -22,7 +22,7 @@ namespace objects {
 class MethodElement {
  private:
   const uint16_t method_id_;
-  const ServiceElement service_{};
+  const ServiceElement service_;
 
  public:
   MethodElement(const uint16_t& method_id, const ServiceElement& service)
