@@ -5,6 +5,7 @@ cc_library(
         "Idatabase.h",
         "database.h",
         "database_element.h",
+        "req_event_element.h",
         "event_element.h",
         "method_element.h",
         "net_interface_element.h",

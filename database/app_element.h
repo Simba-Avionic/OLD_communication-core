@@ -6,6 +6,7 @@
 #include "database/net_interface_element.h"
 #include "database/method_element.h"
 #include "database/event_element.h"
+#include "database/req_event_element.h"
 #include <string>
 #include "unordered_map"
 
@@ -17,7 +18,7 @@ class AppElement {
     std::string name;
     NetInterfaceElement net_interface;
     std::unordered_map<std::string, std::string> pub_methods;
-    std::unordered_map<std::string, EventElement> req_events;
+    std::unordered_map<std::string, ReqEventElement> req_events;
     std::unordered_map<std::string, EventElement> pub_events;
     std::unordered_map<std::string, MethodElement> db;
     std::unordered_map<std::string, std::string> conf;
@@ -25,24 +26,55 @@ class AppElement {
 
 
    public:
-    AppElement();
+    AppElement(const std::string& app_name,
+               const NetInterfaceElement& net_interface_element,
+               const std::unordered_map<std::string, std::string>& pub_methods_map,
+               const std::unordered_map<std::string, ReqEventElement>& req_events_map,
+               const std::unordered_map<std::string, EventElement>& pub_events_map,
+               const std::unordered_map<std::string, MethodElement>& db_map,
+               const std::unordered_map<std::string, std::string>& conf_map)
+        : name(app_name),
+          net_interface(net_interface_element),
+          pub_methods(pub_methods_map),
+          req_events(req_events_map),
+          pub_events(pub_events_map),
+          db(db_map),
+          conf(conf_map) {};
     ~AppElement() = default;
-
-    void setName(const std::string& newName);
-    void setNetInterface(const NetInterfaceElement& newNetInterface);
-    void addPublicMethod(const std::string& methodName, const MethodElement& method);
-    void addRequestEvent(const std::string& eventName, const EventElement& event);
-    void addPublicEvent(const std::string& eventName, const EventElement& event);
-    void addDatabaseMethod(const std::string& methodName, const MethodElement& method);
-
-    const std::string& getName() const;
-    const NetInterfaceElement& getNetInterface() const;
-    const std::unordered_map<uint16_t, std::string>& getPublicMethods() const;
-    const std::unordered_map<std::string, EventElement>& getRequestEvents() const;
-    const std::unordered_map<std::string, EventElement>& getPublicEvents() const;
-    const std::unordered_map<std::string, MethodElement>& getDatabaseMethods() const;
-    const std::unordered_map<std::string, MethodElement>& getConf() const;
+    friend std::ostream& operator<<(std::ostream& os, const AppElement& app_element);
 };
+
+std::ostream& operator<<(std::ostream& os, const AppElement& app_element) {
+    os << "App Name: " << app_element.name << "\n";
+    os << "Net Interface: " << app_element.net_interface << "\n";
+
+    os << "Pub Methods:\n";
+    for (const auto& entry : app_element.pub_methods) {
+        os << "  " << entry.first << ": " << entry.second << "\n";
+    }
+
+    os << "Req Events:\n";
+    for (const auto& entry : app_element.req_events) {
+        os << "  " << entry.first << ": " << entry.second << "\n";
+    }
+
+    os << "Pub Events:\n";
+    for (const auto& entry : app_element.pub_events) {
+        os << "  " << entry.first << ": " << entry.second << "\n";
+    }
+
+    os << "Database Methods:\n";
+    for (const auto& entry : app_element.db) {
+        os << "  " << entry.first << ": " << entry.second << "\n";
+    }
+
+    os << "Configuration:\n";
+    for (const auto& entry : app_element.conf) {
+        os << "  " << entry.first << ": " << entry.second << "\n";
+    }
+
+    return os;
+}
 }  // namespace database
 }  // namespace simba
 }  // namespace objects

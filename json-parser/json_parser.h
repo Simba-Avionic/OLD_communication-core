@@ -7,7 +7,12 @@ namespace database {
 namespace json {
 class Json_parser : public Ijson_parser {
     private:
-     virtual void ParseJson(const nlohmann::json& data) override;
+     simba::database::objects::AppElement ParseJson(const nlohmann::json& data) override;
+     std::unordered_map<std::string, std::string> parsePubMethods(const nlohmann::json& json_data);
+     std::unordered_map<std::string, simba::database::objects::ReqEventElement> Json_parser::parseReqEvents(const nlohmann::json& json_data);
+     std::unordered_map<std::string, simba::database::objects::EventElement> Json_parser::parsePubEvents(const nlohmann::json& json_data);
+     std::unordered_map<std::string, simba::database::objects::MethodElement> parseDb(const nlohmann::json& data);
+     std::unordered_map<std::string, std::string> parseConfig(const nlohmann::json& json_data);
     public:
      Json_parser() = default;
      ~Json_parser() = default;
