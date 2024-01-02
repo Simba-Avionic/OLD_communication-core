@@ -14,7 +14,7 @@
 
 #include <vector>
 
-#include "database/services_element.h"
+#include "database/service_element.h"
 
 namespace simba {
 namespace database {
